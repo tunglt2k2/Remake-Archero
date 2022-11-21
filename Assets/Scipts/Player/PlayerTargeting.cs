@@ -127,9 +127,8 @@ public class PlayerTargeting : MonoBehaviour
         }
         if (getATarget && !JoyStickMovement.Instance.isPlayerMoving && MonsterList.Count != 0)
         {
-            //Debug.Log ( "lookat : " + MonsterList[TargetIndex].transform.GetChild (0));
+            Debug.Log ( "lookat : " + MonsterList[TargetIndex].transform.GetChild (0));
             transform.LookAt(MonsterList[TargetIndex].transform.GetChild(0));
-            Attack();
 
             if (PlayerMovement.Instance.anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
             {

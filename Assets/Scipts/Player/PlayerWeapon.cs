@@ -15,7 +15,7 @@ public class PlayerWeapon : MonoBehaviour
         {
             Debug.Log("Name" + other.transform.name);
             GetComponent<Rigidbody>().velocity = Vector3.zero;
-            Destroy(gameObject, 0.2f);
+            Destroy(gameObject);
         }
     }
     private void OnCollisionEnter(Collision collision)
@@ -25,7 +25,7 @@ public class PlayerWeapon : MonoBehaviour
         {
             Debug.Log("Name" + collision.transform.name);
             GetComponent<Rigidbody>().velocity = Vector3.zero;
-            Destroy(gameObject, 0.2f);
+            Destroy(gameObject);
         }
     }
 }
