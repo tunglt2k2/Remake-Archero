@@ -23,6 +23,7 @@ public class JoyStickMovement : MonoBehaviour
     public GameObject smallStick;
     public GameObject bGStick;
     public Vector3 joyVec;
+    public GameObject joyStickPanelGO;
     private Vector3 stickFirstPosition;
     private Vector3 joyStickFirstPosition;
     private float stickRadius;
@@ -33,37 +34,48 @@ public class JoyStickMovement : MonoBehaviour
         stickRadius = bGStick.gameObject.GetComponent<RectTransform>().sizeDelta.y / 2;
         joyStickFirstPosition = bGStick.transform.position;
     }
+
     public void PointDown()
     {
-        bGStick.transform.position = Input.mousePosition;
-        smallStick.transform.position = Input.mousePosition;
-        stickFirstPosition = Input.mousePosition;
-        //Set Trigger
-        if (!PlayerMovement.Instance.anim.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
+        if (joyStickPanelGO.activeInHierarchy)
         {
-            // Debug.Log("WALK");
-            PlayerMovement.Instance.anim.SetBool("Attack", false);
-            PlayerMovement.Instance.anim.SetBool("Idle", false);
-            PlayerMovement.Instance.anim.SetBool("Walk", true);
-        }
-        isPlayerMoving = true;
-        PlayerTargeting.Instance.getATarget = false;
+            bGStick.transform.position = Input.mousePosition;
+            smallStick.transform.position = Input.mousePosition;
+            stickFirstPosition = Input.mousePosition;
+            //Set Trigger
+            if (!PlayerMovement.Instance.anim.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
+            {
+                // Debug.Log("WALK");
+                PlayerMovement.Instance.anim.SetBool("Attack", false);
+                PlayerMovement.Instance.anim.SetBool("Idle", false);
+                PlayerMovement.Instance.anim.SetBool("Walk", true);
+            }
+            isPlayerMoving = true;
+            PlayerTargeting.Instance.getATarget = false;
+        }   
     }
     public void Drag(BaseEventData baseEventData)
     {
-        PointerEventData pointerEventData = baseEventData as PointerEventData;
-        Vector3 DragPosition = pointerEventData.position;
-        joyVec = (DragPosition - stickFirstPosition).normalized;
-
-        float stickDistance = Vector3.Distance(DragPosition, stickFirstPosition);
-
-        if(stickDistance < stickRadius)
+        if (joyStickPanelGO.activeInHierarchy)
         {
-            smallStick.transform.position = stickFirstPosition + joyVec * stickDistance;
+            PointerEventData pointerEventData = baseEventData as PointerEventData;
+            Vector3 DragPosition = pointerEventData.position;
+            joyVec = (DragPosition - stickFirstPosition).normalized;
+
+            float stickDistance = Vector3.Distance(DragPosition, stickFirstPosition);
+
+            if (stickDistance < stickRadius)
+            {
+                smallStick.transform.position = stickFirstPosition + joyVec * stickDistance;
+            }
+            else
+            {
+                smallStick.transform.position = stickFirstPosition + joyVec * stickRadius;
+            }
         }
         else
         {
-            smallStick.transform.position = stickFirstPosition + joyVec * stickRadius;
+            joyVec = Vector3.zero;
         }
     }
     public void Drop()
@@ -71,7 +83,7 @@ public class JoyStickMovement : MonoBehaviour
         joyVec = Vector3.zero;
         //Set Trigger
         if (!PlayerMovement.Instance.anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
-            {
+        {
             //Debug.Log("IDLE!");
             PlayerMovement.Instance.anim.SetBool("Attack", false);
             PlayerMovement.Instance.anim.SetBool("Walk", false);
@@ -82,7 +94,7 @@ public class JoyStickMovement : MonoBehaviour
         bGStick.transform.position = joyStickFirstPosition;
         smallStick.transform.position = joyStickFirstPosition;
     }
-
+    
 }
 
 

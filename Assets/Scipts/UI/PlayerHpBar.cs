@@ -22,25 +22,49 @@ public class PlayerHpBar : MonoBehaviour
 
     public Transform player;
     public Slider hpBar;
-    public float maxHp;
-    public float currentHp;
-
+    public Slider BackHpSlider;
     public GameObject HpLineFolder;
-    private float unitHp = 200f;
+    private float unitHp;
+    private bool backHpHit;
 
     public Text playerHpText;
+    private int numDefaultLineForder = 5;
+    private void Start()
+    {
+        unitHp = PlayerData.Instance.maxHp / numDefaultLineForder;
+        backHpHit = false;
+    }
     private void Update()
     {
         transform.position = player.position;
-        hpBar.value = currentHp / maxHp;
-        playerHpText.text = "" + currentHp;
+        hpBar.value = Mathf.Lerp(hpBar.value, PlayerData.Instance.currentHp / PlayerData.Instance.maxHp, Time.deltaTime * 5f);
+
+        if (backHpHit)
+        {
+            BackHpSlider.value = Mathf.Lerp(BackHpSlider.value, hpBar.value, Time.deltaTime * 10f);
+            if (hpBar.value >= BackHpSlider.value - 0.01f)
+            {
+                backHpHit = false;
+                BackHpSlider.value = hpBar.value;
+            }
+        }
+        playerHpText.text = "" + PlayerData.Instance.currentHp;
+    }
+
+    public void Dmg()
+    {
+        Invoke("BackHpFun", 0.5f);
+    }
+    void BackHpFun()
+    {
+        backHpHit = true;
     }
 
     public void GetHpBoost()
     {
-        maxHp += 150;
-        currentHp += 150;
-        float scaleX = (1000f / unitHp) / (maxHp / unitHp);
+        PlayerData.Instance.maxHp += 1000;
+        PlayerData.Instance.currentHp += 1000;
+        float scaleX = numDefaultLineForder / (PlayerData.Instance.maxHp / unitHp);
         HpLineFolder.GetComponent<HorizontalLayoutGroup>().gameObject.SetActive(false);
         foreach( Transform child in HpLineFolder.transform)
         {

@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody rb;
     public float moveSpeed = 5f;
-    public Animator anim;
+    public Animator anim { get; private set; }
 
     private void Start()
     {
@@ -52,22 +52,43 @@ public class PlayerMovement : MonoBehaviour
 
         if (other.transform.CompareTag("HpBooster"))
         {
-            PlayerHpBar.Instance.GetHpBoost();
-            Destroy(other.gameObject);
+            float _hpRecover = PlayerData.Instance.currentHp * 0.2f;
+            PlayerData.Instance.RecoverCurentHp(_hpRecover);
+            Destroy(other.transform.parent.gameObject);
         }
 
         if (other.transform.CompareTag("MeleeAtk"))
         {
-            other.transform.parent.GetComponent<EnemyDuck>().meleeAttackArea.SetActive(false);
-            PlayerHpBar.Instance.currentHp -= other.transform.parent.GetComponent<EnemyDuck>().damage * 2f;
+            other.transform.gameObject.SetActive(false);
+            PlayerData.Instance.currentHp -= other.transform.parent.GetComponent<EnemyBase>().damage;
+            PlayerHpBar.Instance.Dmg();
+            TakenDamageAnim();
+        }
 
-            if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Damaged"))
-            {
-                anim.SetTrigger("Dmg");
-                Instantiate(EffectSet.Instance.PlayerDmgEffect, PlayerTargeting.Instance.AttackPoint.position, Quaternion.Euler(90, 0, 0));
-            }
+        if (PlayerTargeting.Instance.MonsterList.Count <= 0 && other.transform.CompareTag("EXP"))
+        {
+            PlayerData.Instance.PlayerExpCalc(100f);
+            Destroy(other.gameObject.transform.parent.gameObject);
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.CompareTag("RangeAtk"))
+        {
+            Destroy(collision.gameObject, 0.1f);
+            TakenDamageAnim();
+        }
+    }
 
+    public void TakenDamageAnim()
+    {
+        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Damaged"))
+        {
+            anim.SetTrigger("Dmg");
+            Instantiate(EffectSet.Instance.PlayerDmgEffect, PlayerTargeting.Instance.AttackPoint.position, Quaternion.Euler(90, 0, 0));
+        }
+    }
 }
+
+

@@ -7,12 +7,14 @@ public class EnemyHpBar : MonoBehaviour
     public bool backHpHit = false;
 
     public Transform enemy;
-    public float maxHp = 1000f;
-    public float currentHp = 1000f;
-
+    private float maxHp ;
+    private float currentHp;
+    public Vector3 canvasOffset;
     private void Update()
     {
-        transform.position = enemy.position;
+        transform.position = enemy.position + canvasOffset;
+        maxHp = enemy.GetComponent<EnemyBase>().maxHp;
+        currentHp = enemy.GetComponent<EnemyBase>().currentHp;
         hpSlider.value = Mathf.Lerp(hpSlider.value,currentHp / maxHp,Time.deltaTime * 5f);
 
         if (backHpHit)
@@ -28,7 +30,6 @@ public class EnemyHpBar : MonoBehaviour
 
     public void Dmg()
     {
-        currentHp -= 250f;
         Invoke("BackHpFun", 0.5f);
     }
     void BackHpFun()

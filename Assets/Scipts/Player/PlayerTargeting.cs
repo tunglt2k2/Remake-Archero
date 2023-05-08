@@ -34,7 +34,6 @@ public class PlayerTargeting : MonoBehaviour
 
     public List<GameObject> MonsterList = new List<GameObject>();
 
-    public GameObject PlayerBolt;
     public Transform AttackPoint;
 
     private void OnDrawGizmos()
@@ -70,7 +69,33 @@ public class PlayerTargeting : MonoBehaviour
     private void Attack()
     {
         PlayerMovement.Instance.anim.SetFloat("AttackSpeed",attackSpeed);
-        Instantiate(PlayerBolt, AttackPoint.position, transform.rotation);
+        Instantiate(PlayerData.Instance.PlayerBolt[PlayerData.Instance.PlayerSkill["Front Arrow"]], AttackPoint.position, transform.rotation);
+
+        if(PlayerData.Instance.PlayerSkill["Diagonal Arrow"] > 0)
+        {
+            Instantiate(PlayerData.Instance.PlayerBolt[PlayerData.Instance.PlayerSkill["Diagonal Arrow"] - 1], AttackPoint.position, Quaternion.Euler(transform.eulerAngles + new Vector3(0, -45f, 0)));
+            Instantiate(PlayerData.Instance.PlayerBolt[PlayerData.Instance.PlayerSkill["Diagonal Arrow"] - 1], AttackPoint.position, Quaternion.Euler(transform.eulerAngles + new Vector3(0, 45f, 0)));
+        }
+
+        if (PlayerData.Instance.PlayerSkill["Multishot"] > 0)
+        {
+            for (int i = 0; i < PlayerData.Instance.PlayerSkill["Multishot"]; i++)
+            {
+                Invoke("MultiShot", 0.2f * (i + 1));
+            }
+        }
+
+    }
+
+    void MultiShot()
+    {
+        Instantiate(PlayerData.Instance.PlayerBolt[PlayerData.Instance.PlayerSkill["Front Arrow"]], AttackPoint.position, transform.rotation);
+
+        if (PlayerData.Instance.PlayerSkill["Diagonal Arrow"] > 0)
+        {
+            Instantiate(PlayerData.Instance.PlayerBolt[PlayerData.Instance.PlayerSkill["Diagonal Arrow"] - 1], AttackPoint.position, Quaternion.Euler(transform.eulerAngles + new Vector3(0, -45f, 0)));
+            Instantiate(PlayerData.Instance.PlayerBolt[PlayerData.Instance.PlayerSkill["Diagonal Arrow"] - 1], AttackPoint.position, Quaternion.Euler(transform.eulerAngles + new Vector3(0, 45f, 0)));
+        }
     }
 
     private void SetTarget()
@@ -127,8 +152,14 @@ public class PlayerTargeting : MonoBehaviour
         }
         if (getATarget && !JoyStickMovement.Instance.isPlayerMoving && MonsterList.Count != 0)
         {
-            Debug.Log ( "lookat : " + MonsterList[TargetIndex].transform.GetChild (0));
+            //Debug.Log ( "lookat : " + MonsterList[TargetIndex].transform.GetChild (0));
             transform.LookAt(MonsterList[TargetIndex].transform.GetChild(0));
+
+            if(UIController.Instance.bossRoom)
+            {
+                UIController.Instance.BossCurrentHp = MonsterList[TargetIndex].transform.GetChild(0).GetComponent<EnemyBase>().currentHp;
+                UIController.Instance.BossMaxHp = MonsterList[TargetIndex].transform.GetChild(0).GetComponent<EnemyBase>().maxHp;
+            }
 
             if (PlayerMovement.Instance.anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
             {
