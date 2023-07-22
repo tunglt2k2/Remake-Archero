@@ -116,6 +116,7 @@
     <Compile Include="Assets\Sprite\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_LightFlicker.cs" />
     <Compile Include="Assets\Scipts\InGame\Monster\Enemy\Normal Enemy\EnemyNormal.cs" />
     <Compile Include="Assets\Scipts\InGame\UI\Panel\BonusMgr.cs" />
+    <Compile Include="Assets\Scipts\InGame\Monster\Projectile\EnemyProjectile.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

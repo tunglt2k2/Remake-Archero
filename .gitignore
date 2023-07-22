@@ -2,3 +2,9 @@ Library
 Logs
 obj
 Temp
+/*.sln
+/*.csproj
+/*.pidb
+/*.userprefs
+/*.unityproj
+/*.booproj

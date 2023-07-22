@@ -16,7 +16,7 @@ public class HpBooster : MonoBehaviour
         yield return new WaitForSeconds(1f);
         while (true)
         {    
-            transform.position = Vector3.Lerp(transform.position, Player.transform.position, 0.1f);
+            transform.position = Vector3.Lerp(transform.position, Player.transform.position, 0.3f);
             yield return null;
         }
     }

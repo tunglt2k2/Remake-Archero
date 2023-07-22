@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class RoomCondition : MonoBehaviour
 {
-    List<GameObject> MonsterListInRoom = new List<GameObject>();
+    public List<GameObject> MonsterListInRoom = new List<GameObject>();
     [HideInInspector] public bool playerInThisRoom = false;
     [HideInInspector] public bool isClearRoom;
+    private bool isLoadedMonster = false;
 
     GameObject NextGate;
     protected virtual void Start()
@@ -48,17 +50,26 @@ public class RoomCondition : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInThisRoom = true;
-            PlayerTargeting.Instance.MonsterList = MonsterListInRoom;
             StageManager.Instance.CloseDoor.transform.position = NextGate.transform.position ;
             StageManager.Instance.OpenDoor.transform.position = NextGate.transform.position ;
             StageManager.Instance.OpenDoor.SetActive(false);
             StageManager.Instance.CloseDoor.SetActive(true);
-        }
-        else if (other.CompareTag("Monster"))
+        }         
+    }
+
+    private void Update()
+    {
+        if (playerInThisRoom && !isLoadedMonster)
         {
-            MonsterListInRoom.Add(other.transform.parent.gameObject);
+            // Find all child objects with the "Monster" tag using LINQ.
+            MonsterListInRoom = GetComponentsInChildren<Transform>()
+                .Where(childTransform => childTransform.CompareTag("Monster"))
+                .Select(childTransform => childTransform.gameObject)
+                .ToList();
+
+            isLoadedMonster = true;
+            PlayerTargeting.Instance.MonsterList = MonsterListInRoom;
         }
-            
     }
 
     private void OnTriggerExit(Collider other)

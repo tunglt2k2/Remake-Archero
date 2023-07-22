@@ -22,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody rb;
     public float moveSpeed = 5f;
+   
     public Animator anim { get; private set; }
 
     private void Start()
@@ -40,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector3(JoyStickMovement.Instance.joyVec.x, 0, JoyStickMovement.Instance.joyVec.y) * moveSpeed;
             rb.rotation = Quaternion.LookRotation(new Vector3(JoyStickMovement.Instance.joyVec.x, 0, JoyStickMovement.Instance.joyVec.y));
         }
+        gameObject.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
     }
 
     private void OnTriggerEnter(Collider other)

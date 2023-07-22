@@ -11,7 +11,8 @@ public class EnemyNormal : EnemyMeleeFSM
         {
             if (nvAgent != null) nvAgent.isStopped = true;
             rb.gameObject.SetActive(false);
-            PlayerTargeting.Instance.MonsterList.Remove(transform.parent.gameObject);
+            PlayerTargeting.Instance.MonsterList.Remove(gameObject);
+            Debug.Log("Die");
             PlayerTargeting.Instance.TargetIndex = -1;
 
             //Recover if have blood thirst skill;

@@ -10,7 +10,8 @@ public class BossMonster : EnemyMeleeFSM
         {
             if(nvAgent != null ) nvAgent.isStopped = true;
             rb.gameObject.SetActive(false);
-            PlayerTargeting.Instance.MonsterList.Remove(transform.parent.gameObject);
+            PlayerTargeting.Instance.MonsterList.Remove(gameObject);
+            Debug.Log("Die");
             PlayerTargeting.Instance.TargetIndex = -1;
             Vector3 CurrentPostion = new Vector3(transform.position.x, 2f, transform.position.z);
 
