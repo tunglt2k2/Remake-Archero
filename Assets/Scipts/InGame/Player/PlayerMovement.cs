@@ -67,6 +67,14 @@ public class PlayerMovement : MonoBehaviour
             TakenDamageAnim();
         }
 
+        if (other.transform.CompareTag("RangeAtk"))
+        {
+            Destroy(other.gameObject, 0.1f);
+            PlayerData.Instance.currentHp -= other.transform.GetComponent<EnemyProjectile>()?.damage ?? 0;
+            PlayerHpBar.Instance.Dmg();
+            TakenDamageAnim();
+        }
+
         if (PlayerTargeting.Instance.MonsterList.Count <= 0 && other.transform.CompareTag("EXP"))
         {
             PlayerData.Instance.PlayerExpCalc(100f);
@@ -79,6 +87,8 @@ public class PlayerMovement : MonoBehaviour
         if (collision.transform.CompareTag("RangeAtk"))
         {
             Destroy(collision.gameObject, 0.1f);
+            PlayerData.Instance.currentHp -= collision.transform.GetComponent<EnemyProjectile>()?.damage ?? 0;
+            PlayerHpBar.Instance.Dmg();
             TakenDamageAnim();
         }
     }

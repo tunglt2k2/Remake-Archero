@@ -24,6 +24,7 @@ public class EnemyCat : EnemyNormal
         maxHp += (StageManager.Instance.currentStage + 1) * 100f;
         currentHp = maxHp;
         damage += (StageManager.Instance.currentStage + 1) * 10f;
+        LaserEffect.GetComponent<LaserCat>().damage = damage;
     }
 
     protected override IEnumerator Idle()
@@ -38,9 +39,7 @@ public class EnemyCat : EnemyNormal
         StartCoroutine(WaitPlayer());
         StartCoroutine(LaserOff());
         yield return new WaitForSeconds(6f);
-        currentState = State.Move;
-        
-        
+        currentState = State.Move;        
     }
 
     protected override IEnumerator Move()

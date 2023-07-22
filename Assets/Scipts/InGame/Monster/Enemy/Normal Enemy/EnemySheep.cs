@@ -17,7 +17,13 @@ public class EnemySheep: EnemyNormal
     {
         base.Start();
         player = GameObject.FindGameObjectWithTag("Player");
+    }
 
+    protected override void InitMonster()
+    {
+        maxHp += (StageManager.Instance.currentStage + 1) * 200f;
+        currentHp = maxHp;
+        damage += (StageManager.Instance.currentStage + 1) * 20f;
     }
 
     IEnumerator WaitPlayer()
@@ -45,7 +51,8 @@ public class EnemySheep: EnemyNormal
     void Shoot()
     {
         Vector3 currentRotation = transform.eulerAngles + new Vector3(-90, 0, 0);
-        Instantiate(EnemyBolt, BoltGenPosition.position, Quaternion.Euler(currentRotation));
+        GameObject go = Instantiate(EnemyBolt, BoltGenPosition.position, Quaternion.Euler(currentRotation));
+        go.GetComponent<EnemyProjectile>().damage = damage;
     }
     protected override IEnumerator Idle()
     {

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Penguin3CuBolt : MonoBehaviour
+public class Penguin3CuBolt : EnemyProjectile
 {
     new Rigidbody rigidbody;
     Vector3 newDir;

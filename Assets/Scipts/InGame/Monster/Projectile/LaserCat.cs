@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LaserCat : MonoBehaviour
+public class LaserCat : EnemyProjectile
 {
     public GameObject HitEffect;
     public GameObject Laser;
@@ -28,7 +28,7 @@ public class LaserCat : MonoBehaviour
                 HitEffect.transform.position = hit.point;
                 if (hit.transform.CompareTag("Player"))
                 {
-                    PlayerData.Instance.currentHp -= Time.deltaTime * 250f;
+                    PlayerData.Instance.currentHp -= damage*Time.deltaTime * 5f;
                 }
                 
             }

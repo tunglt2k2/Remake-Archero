@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossBolt : MonoBehaviour
+public class BossBolt : EnemyProjectile
 {
     Rigidbody rb;
-    public float damage ;
     private void Start()
     {
         Destroy(gameObject, 5f);
@@ -17,13 +16,6 @@ public class BossBolt : MonoBehaviour
     {
         if (collision.transform.CompareTag("Wall"))
         {
-            Destroy(gameObject, 0.1f);
-        }
-        else if (collision.transform.CompareTag("Player"))
-        {
-            PlayerData.Instance.currentHp -= damage;
-            PlayerHpBar.Instance.Dmg();
-            PlayerMovement.Instance.TakenDamageAnim();
             Destroy(gameObject, 0.1f);
         }
     }

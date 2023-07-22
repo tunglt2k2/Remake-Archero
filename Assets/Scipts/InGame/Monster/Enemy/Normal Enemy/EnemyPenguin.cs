@@ -27,6 +27,12 @@ public class EnemyPenguin : EnemyNormal
 
         StartCoroutine(WaitPlayer());
     }
+    protected override void InitMonster()
+    {
+        maxHp += (StageManager.Instance.currentStage + 1) * 100f;
+        currentHp = maxHp;
+        damage += (StageManager.Instance.currentStage + 1) * 10f;
+    }
 
     IEnumerator WaitPlayer()
     {
@@ -88,7 +94,8 @@ public class EnemyPenguin : EnemyNormal
     public void Shoot()
     {
         Vector3 CurrentRotation = transform.eulerAngles + new Vector3(-90, 0, 0);
-        Instantiate(EnemyBolt, BoltGenPosition.position, Quaternion.Euler(CurrentRotation));
+        GameObject go = Instantiate(EnemyBolt, BoltGenPosition.position, Quaternion.Euler(CurrentRotation));
+        go.GetComponent<EnemyProjectile>().damage = damage;
     }
 
     protected override IEnumerator Idle()

@@ -5,7 +5,6 @@ using UnityEngine;
 public class EnemyMummy : EnemyNormal
 {
     public GameObject meleeAttackArea;
-    public float velocity;
     public float timeAutoRotate = 2f;
     Vector3 NewDir;
     private new void Start()
@@ -18,11 +17,18 @@ public class EnemyMummy : EnemyNormal
         StartCoroutine(AutoRotate());
     }
 
+    protected override void InitMonster()
+    {
+        maxHp += (StageManager.Instance.currentStage + 1) * 300f;
+        currentHp = maxHp;
+        damage += (StageManager.Instance.currentStage + 1) * 10f;
+        moveSpeed = 3 + (StageManager.Instance.currentStage + 1) * 0.1f;
+    }
     private void InitalVelocity()
     {
         transform.LookAt(Player.transform.position);
         NewDir = transform.forward;
-        rb.velocity = NewDir * velocity;
+        rb.velocity = NewDir * moveSpeed;
     }
 
     IEnumerator ResetAttackArea()
@@ -53,24 +59,17 @@ public class EnemyMummy : EnemyNormal
         }
     }
 
-    protected override void InitMonster()
-    {
-        maxHp += (StageManager.Instance.currentStage + 1) * 100f;
-        currentHp = maxHp;
-        damage += (StageManager.Instance.currentStage + 1) * 10f;
-    }
-
     protected override IEnumerator Move()
     {
         yield return null;
-        rb.velocity = NewDir * velocity;
+        rb.velocity = NewDir * moveSpeed;
     }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.CompareTag("Wall"))
         {
             NewDir = Vector3.Reflect(NewDir, collision.contacts[0].normal);
-            rb.velocity = NewDir * velocity;
+            rb.velocity = NewDir * moveSpeed;
             transform.forward = NewDir;
         }
     }

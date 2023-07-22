@@ -91,7 +91,6 @@
     <Compile Include="Assets\Scipts\InGame\UI\EnemyHpBar.cs" />
     <Compile Include="Assets\Sprite\JMO Assets\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RotateCamera.cs" />
     <Compile Include="Assets\Scipts\InGame\Stage\Manager\StageManager.cs" />
-    <Compile Include="Assets\Scipts\InGame\Monster\Projectile\EnemyRangeSphere.cs" />
     <Compile Include="Assets\Scipts\InGame\Monster\Projectile\SheepBolt.cs" />
     <Compile Include="Assets\Scipts\InGame\Monster\Enemy\Boss\PBR_Golem.cs" />
     <Compile Include="Assets\Scipts\InGame\Monster\Enemy\Normal Enemy\EnemyMole.cs" />

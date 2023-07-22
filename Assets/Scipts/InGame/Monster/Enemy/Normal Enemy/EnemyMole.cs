@@ -33,6 +33,7 @@ public class EnemyMole : EnemyNormal
         maxHp += (StageManager.Instance.currentStage + 1) * 100f;
         currentHp = maxHp;
         damage += (StageManager.Instance.currentStage + 1) * 10f;
+        moveSpeed = 2 + (StageManager.Instance.currentStage + 1) * 0.1f;
     }
 
     protected override IEnumerator Move()
@@ -45,7 +46,7 @@ public class EnemyMole : EnemyNormal
         else
         {
             nvAgent.SetDestination(Player.transform.position);
-            nvAgent.speed = 2f;
+            nvAgent.speed = moveSpeed;
         }
     }
     private void OnCollisionEnter(Collision collision)

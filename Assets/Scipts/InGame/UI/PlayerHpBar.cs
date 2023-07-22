@@ -48,7 +48,7 @@ public class PlayerHpBar : MonoBehaviour
                 BackHpSlider.value = hpBar.value;
             }
         }
-        playerHpText.text = "" + PlayerData.Instance.currentHp;
+        playerHpText.text = "" + (int)PlayerData.Instance.currentHp;
     }
 
     public void Dmg()

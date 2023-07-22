@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class EnemyProjectile : MonoBehaviour
 {
-    public int damage = 100;
+    public float damage = 100f;
 }

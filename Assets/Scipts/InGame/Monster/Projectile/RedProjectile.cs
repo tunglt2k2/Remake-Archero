@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RedProjectile : MonoBehaviour
+public class RedProjectile : EnemyProjectile
 {
-    public float damage;
     public float angle = 20f;
     public float speed = 2f;
     public Vector3 targetPosition;
@@ -42,7 +41,7 @@ public class RedProjectile : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Wall") || other.CompareTag("Ground") || other.CompareTag("Player"))
+        if(other.CompareTag("Wall") || other.CompareTag("Ground"))
         {
             Destroy(gameObject);
         }

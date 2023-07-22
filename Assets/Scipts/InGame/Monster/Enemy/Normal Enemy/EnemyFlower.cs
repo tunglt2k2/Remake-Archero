@@ -16,9 +16,9 @@ public class EnemyFlower : EnemyNormal
 
     protected override void InitMonster()
     {
-        maxHp += (StageManager.Instance.currentStage + 1) * 100f;
+        maxHp += (StageManager.Instance.currentStage + 1) * 400f;
         currentHp = maxHp;
-        damage += (StageManager.Instance.currentStage + 1) * 10f;
+        damage += (StageManager.Instance.currentStage + 1) * 20f ;
     }
 
     protected override void AttackEffect()
@@ -54,10 +54,9 @@ public class EnemyFlower : EnemyNormal
 
     private void InitProjectile(Vector3 position)
     {
-
         GameObject projectileInstance = Instantiate(projectilePrefab, attackPoint.transform.position, Quaternion.identity) as GameObject;
         projectileInstance.GetComponent<RedProjectile>().targetPosition = position;
-
+        projectileInstance.GetComponent<RedProjectile>().damage = damage + Random.Range(10,100);        
     }
    
 }

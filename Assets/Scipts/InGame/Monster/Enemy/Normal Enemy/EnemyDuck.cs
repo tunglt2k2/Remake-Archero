@@ -42,6 +42,7 @@ public class EnemyDuck : EnemyNormal
         maxHp += (StageManager.Instance.currentStage + 1) * 100f;
         currentHp = maxHp;
         damage += (StageManager.Instance.currentStage + 1) * 10f;
+        moveSpeed = 3 + (StageManager.Instance.currentStage + 1) * 0.1f;
     }
 
     protected override void AttackEffect()
