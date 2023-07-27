@@ -61,6 +61,7 @@
     <Compile Include="Assets\Scipts\InGame\UI\Panel\UIController.cs" />
     <Compile Include="Assets\Scipts\InGame\Monster\Enemy\Normal Enemy\EnemyMummy.cs" />
     <Compile Include="Assets\Scipts\InGame\Player\PlayerMultiPotato.cs" />
+    <Compile Include="Assets\Scipts\InGame\Monster\Projectile\EnemyProjectile.cs" />
     <Compile Include="Assets\Scipts\InGame\Monster\Enemy\Normal Enemy\EnemyCat.cs" />
     <Compile Include="Assets\Scipts\InGame\Stage\Trap\TrapBase.cs" />
     <Compile Include="Assets\Sprite\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_AutoRotate.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Assets\Scipts\InGame\Stage\Item\SpinObject.cs" />
     <Compile Include="Assets\Scipts\Menu\MainMenu.cs" />
     <Compile Include="Assets\Scipts\InGame\Scriptable Object\SkillList.cs" />
+    <Compile Include="Assets\Scipts\Menu\DontDestroyAudio.cs" />
     <Compile Include="Assets\Sprite\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_AutoDestructShuriken.cs" />
     <Compile Include="Assets\Scipts\InGame\Monster\Enemy\Boss\Polyarl_Golem.cs" />
     <Compile Include="Assets\Scipts\InGame\Stage\Manager\RoomCondition.cs" />
@@ -115,7 +117,6 @@
     <Compile Include="Assets\Sprite\JMO Assets\Cartoon FX (legacy)\Scripts\CFX_LightFlicker.cs" />
     <Compile Include="Assets\Scipts\InGame\Monster\Enemy\Normal Enemy\EnemyNormal.cs" />
     <Compile Include="Assets\Scipts\InGame\UI\Panel\BonusMgr.cs" />
-    <Compile Include="Assets\Scipts\InGame\Monster\Projectile\EnemyProjectile.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
